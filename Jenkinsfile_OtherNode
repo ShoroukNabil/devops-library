@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+
+    environment {
+        FRONTEND_DIR = 'frontend' // Update this if your Angular project is in a different folder
+    }
+
+    stages {
+        stage('Install Backend Packages') {
+            steps {
+                echo 'Running Maven clean install...'
+                sh 'mvn clean install -DskipTests'
+            }
+        }
+
+        stage('Install Frontend Packages') {
+            steps {
+                dir("${env.FRONTEND_DIR}") {
+                    echo 'Installing Angular packages...'
+                    sh 'npm install'
+                }
+            }
+        }
+
+        stage('Start Backend App') {
+            steps {
+                echo 'Starting Spring Boot application...'
+                sh 'nohup mvn spring-boot:run &'
+            }
+        }
+
+        stage('Start Frontend App') {
+            steps {
+                dir("${env.FRONTEND_DIR}") {
+                    echo 'Starting Angular application...'
+                    sh 'nohup npm start &'
+                }
+            }
+        }
+    }
+}

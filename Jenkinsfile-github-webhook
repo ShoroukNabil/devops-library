@@ -1,0 +1,19 @@
+@Library('devops-library') _  // Load the shared library
+
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/ShoroukNabil/DevOps_MVN_Server.git', branch: 'main'
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Building from GitHub webhook...'
+                 mvnInstall()  // Calls vars/mvnInstall.groovy
+                
+            }
+        }
+    }
+}
