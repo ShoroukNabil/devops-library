@@ -1,0 +1,38 @@
+pipeline {
+    
+  agent {
+            label 'ubuntu-slave'  
+        }
+  
+    parameters {
+        string(name: 'branchName', defaultValue: 'main', description: 'Git branch to build')
+    }
+
+    environment {
+        GIT_REPO_URL = 'https://github.com/ShoroukNabil/DevOps_MVN_Server.git'
+    }
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git branch: "${params.branchName}", url: "${GIT_REPO_URL}"
+            }
+        }
+         stage('List Files - Before') {
+            steps {
+                sh 'ls -la'
+            }
+        }
+         stage('List Files') {
+            steps {
+                sh 'mvn clean install'
+            }
+        }
+
+        stage('List Files - After') {
+            steps {
+                sh 'ls -la'
+            }
+        }
+    }
+}
