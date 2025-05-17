@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello World'
+                echo 'Hello from Jenkins'
+            }
+        }
+           stage('Hello from Another Node') {
+            agent {
+                label 'ubuntu-slave'  
+            }
+            steps {
+                echo 'Hello from this node'
+                sh 'hostname'
+            }
+        }
+    }
+}
