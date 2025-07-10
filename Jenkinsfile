@@ -11,13 +11,5 @@ pipeline {
                 }
             }
         }
-
-        stage('Install Backend') {
-            steps {
-                script {
-                    mvnInstall()  // Calls vars/mvnInstall.groovy
-                }
-            }
-        }
     }
 }
