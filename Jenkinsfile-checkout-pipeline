@@ -4,7 +4,7 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'BRANCH_NAME', defaultValue: 'main', description: 'Git branch to checkout')
+        string(name: 'BRANCH_NAME', defaultValue: 'demo-docker', description: 'Git branch to checkout')
     }
 
     stages {
@@ -15,7 +15,7 @@ pipeline {
                         $class: 'GitSCM',
                         branches: [[name: "*/${params.BRANCH_NAME}"]],
                         userRemoteConfigs: [[
-                            url: 'https://your.git.repo.url/repository.git'  // Replace with your repo URL
+                            url: 'https://github.com/ShoroukNabil/DevOps_MVN_Server.git'  
                         ]]
                     ])
                 }
